@@ -1,0 +1,15 @@
+
+#[link(name = "tls",
+       vers = "0.1",
+       uuid = "94783199-f4bf-42af-911c-b61cc98ec72d",
+       url = "https://github.com/randombit/rust-tls/tree/master")];
+
+#[comment = "Rust TLS library"];
+#[license = "MIT"];
+#[crate_type = "lib"];
+
+extern mod std;
+extern mod crypto;
+
+pub mod hex;
+pub mod rc4;
