@@ -1,15 +1,8 @@
-extern mod crypto;
-
-
 
 enum ProtocolVersion {
     TlsVersion10 = 0x0301,
     TlsVersion11 = 0x0302,
     TlsVersion12 = 0x0303
-}
-
-struct Extension {
-
 }
 
 struct ClientHelloData {
@@ -18,7 +11,6 @@ struct ClientHelloData {
     session_id: ~[u8],
     ciphersuites: ~[u16],
     compression: ~[u8],
-    extensions: ~[Extension]
 }
 
 impl ClientHelloData {
@@ -26,7 +18,7 @@ impl ClientHelloData {
     static fn new(version: ProtocolVersion) -> ClientHelloData {
         let ch: ClientHelloData = ClientHelloData {
             version: version,
-            random: crypto::rand::rand_bytes(16),
+            random: util::hello_random(),
             session_id: ~[],
             ciphersuites: ~[],
             compression: ~[0u8]
@@ -38,7 +30,7 @@ impl ClientHelloData {
     static fn deserialize(data: ~[u8]) -> ClientHelloData {
         let ch: ClientHelloData = ClientHelloData {
             version: TlsVersion12,
-            random: crypto::rand::rand_bytes(16),
+            random: ~[],
             session_id: ~[],
             ciphersuites: ~[],
             compression: ~[0u8]
@@ -72,11 +64,13 @@ impl HandshakeMessage {
     }
 }
 
-fn main() {
-    io::println("morning?");
+#[cfg(tests)]
+mod tests {
+    #[test]
+    fn test() {
+        let ch = ClientHelloData::new(TlsVersion12);
 
-    let ch = ClientHelloData::new(TlsVersion12);
-
-    io::println(fmt!("%?", ch));
+        io::println(fmt!("%?", ch));
+    }
 
 }

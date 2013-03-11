@@ -11,5 +11,10 @@
 extern mod std;
 extern mod crypto;
 
-pub mod hex;
-pub mod rc4;
+mod hex;
+mod rc4;
+mod util;
+mod ciphersuite;
+mod handshake;
+
+pub mod channel;

@@ -82,7 +82,7 @@ mod tests {
     #[test]
     pub fn testPerformance() {
         const trials : uint = 256;
-        const bytes_per_trial : uint = 64*1024;
+        const bytes_per_trial : uint = 16*1024;
 
         let mut rc4 = rc4([1, 255, 1]);
 
