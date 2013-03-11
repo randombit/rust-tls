@@ -27,17 +27,24 @@ extern mod libcrypto {
     fn HMAC_Update(ctx: *mut HMAC_CTX, input: *u8, len: libc::c_uint);
 
     fn HMAC_Final(ctx: *mut HMAC_CTX, output: *mut u8, len: *mut libc::c_uint);
+
+    fn EVP_md5() -> EVP_MD;
+    fn EVP_sha1() -> EVP_MD;
+    fn EVP_sha224() -> EVP_MD;
+    fn EVP_sha256() -> EVP_MD;
+    fn EVP_sha384() -> EVP_MD;
+    fn EVP_sha512() -> EVP_MD;
 }
 
 // fixme copied from gitcrypto hash.rs
 fn evpmd(t: HashType) -> (EVP_MD, uint) {
     match t {
-        MD5 => (crypto::hash::libcrypto::EVP_md5(), 16u),
-        SHA1 => (libcrypto::EVP_sha1(), 20u),
-        SHA224 => (libcrypto::EVP_sha224(), 28u),
-        SHA256 => (libcrypto::EVP_sha256(), 32u),
-        SHA384 => (libcrypto::EVP_sha384(), 48u),
-        SHA512 => (libcrypto::EVP_sha512(), 64u),
+        crypto::hash::MD5 => (libcrypto::EVP_md5(), 16u),
+        crypto::hash::SHA1 => (libcrypto::EVP_sha1(), 20u),
+        crypto::hash::SHA224 => (libcrypto::EVP_sha224(), 28u),
+        crypto::hash::SHA256 => (libcrypto::EVP_sha256(), 32u),
+        crypto::hash::SHA384 => (libcrypto::EVP_sha384(), 48u),
+        crypto::hash::SHA512 => (libcrypto::EVP_sha512(), 64u),
     }
 }
 
@@ -49,7 +56,7 @@ pub struct HMAC {
 pub fn HMAC(ht: HashType, key: ~[u8]) -> HMAC {
     unsafe {
 
-        let (evp, mdlen) = crypto::hash::evpmd(ht);
+        let (evp, mdlen) = evpmd(ht);
 
         let mut ctx : HMAC_CTX = HMAC_CTX {
             mut md: ptr::null(),
