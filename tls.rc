@@ -9,10 +9,8 @@
 #[crate_type = "lib"];
 
 extern mod std;
-extern mod crypto;
+extern mod crypto (vers = "0.3");
 
-mod hex;
-mod rc4;
 mod util;
 mod ciphersuite;
 mod handshake;
