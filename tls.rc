@@ -1,18 +1,20 @@
 
+#[crate_type = "lib"];
+#[desc = "SSL/TLS library"];
+#[license = "MIT"];
+
 #[link(name = "tls",
        vers = "0.1",
        uuid = "94783199-f4bf-42af-911c-b61cc98ec72d",
        url = "https://github.com/randombit/rust-tls/tree/master")];
 
-#[comment = "Rust TLS library"];
-#[license = "MIT"];
-#[crate_type = "lib"];
-
 extern mod std;
 extern mod crypto (vers = "0.3");
 
-mod util;
 mod ciphersuite;
 mod handshake;
+mod packetio;
+mod util;
 
+pub mod version;
 pub mod channel;
